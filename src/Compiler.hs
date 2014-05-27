@@ -31,7 +31,7 @@ getVar :: String -> CompilerState -> (CompilerState, Int)
 getVar var state = case findVar var state of 
          Just i -> (state, i)
          Nothing ->(state {variables = (var, i') : variables state}, i') 
-            where i' = 1 + snd (headOrDefault ("",0) $ variables state)
+            where i' = 1 + snd (headOrDefault ("",-1) $ variables state)
 
 findVar :: String -> CompilerState -> Maybe Int
 findVar var state = snd <$> find (\x -> fst x == var) (variables state)
@@ -110,6 +110,6 @@ compile (Program statements) = compileStatements statements defCompilerState
 -- show' (Left error) = "error: " ++ show error
 
 show' :: CompilerState -> String
-show' state = foldr (\x sum -> sum ++ show x ++ "\n") "" $ commands state
+show' state = snd $ foldr (\x (i,sum) -> (i+1, sum ++ (show i) ++ ":\t" ++ show x ++ "\n")) (0, "") $ commands state
 
 

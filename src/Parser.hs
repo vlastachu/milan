@@ -39,6 +39,7 @@ expr    = buildExpressionParser table term
           <?> "expression"
 
 term    =   Paren    <$> L.parens expr 
+	<|> Read     <$  L.read 
 	<|> (Constant . (fromInteger::Integer -> Int))   <$> L.int
 	<|> (Identifier) <$> L.ident
 	<?> "term (i.e. paren, digit, identifier)"
