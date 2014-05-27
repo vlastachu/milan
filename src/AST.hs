@@ -1,5 +1,10 @@
 module AST where
 
+-- Модуль объявляет структуры для Абстрактного Синтаксического Дерева
+-- Такие структуры не зависят от исходного языка (т.е. не должны зависить от парсера)
+-- и также не зависят от целевого языка (т.е. не должны зависить от  модуля Compiler)
+
+
 newtype Program = Program [Statement] deriving (Show)
 
 data Statement =  Write Expr 
@@ -23,6 +28,7 @@ data Expr =   Identifier String
             | Paren Expr
             deriving (Eq, Show)
 
+--всего один унарный оператор.
 data UnOperator = Neg deriving (Eq, Show)
 
 data BinOperator = Add | Sub | Div | Mult deriving (Eq, Show) 
